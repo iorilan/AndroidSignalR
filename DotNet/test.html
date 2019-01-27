@@ -1,0 +1,36 @@
+...
+<script src="~/Scripts/jquery.signalR-2.2.3.min.js"></script>
+    <script src="~/SignalR/hubs"></script>
+	...
+	
+	<body>
+	
+	...
+	 <span id="lblResult">
+
+        </span>
+	...
+	
+	</body>
+	
+	
+	<script>
+		var myHub = $.connection.myHub;
+        // Client method to broadcast the message
+        myHub.client.commandText = function (message) {
+            var obj = JSON.parse(message);
+            console.log(obj);
+            
+            var html = $("#lblResult").html();
+            $("#lblResult").html(message + "<br/>" + html);
+        };
+
+        console.log("step 1");at we can see whats happening in the browser console log. [OPTIONAL]
+        $.connection.hub.logging = true;
+
+        // Start the hub
+        $.connection.hub.start().done(function () {
+            console.log("Connected, transport = " + $.connection.hub.transport.name);
+            //myHub.server.hiServer("");
+        });
+	</script>
